@@ -4,6 +4,12 @@ export enum TrafficLightStatus {
     YELLOW = 'YELLOW'
 };
 
+export enum Directions {
+    LEFT = 'left',
+    RIGHT = 'right',
+    STRAIGHT = 'straight'
+};
+
 export enum RoadDirection {
     NORTH = 'north',
     SOUTH = 'south',
