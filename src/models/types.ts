@@ -25,5 +25,5 @@ export type ConditionArrowConflictPairs = {
 }
 
 export type IntersectionTrafficLightStatus = Record<RoadDirection, TrafficLightStatus>;
-
-export type CarQueue = Record<RoadDirection, Vehicle[]>;
+export type RoadGroup = "NS" | "EW" | null;
+export type CarQueues = Record<RoadDirection, Vehicle[]>;

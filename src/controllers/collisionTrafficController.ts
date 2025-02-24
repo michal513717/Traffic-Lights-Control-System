@@ -1,8 +1,8 @@
-import { Directions, RoadDirection, TrafficLightStatus } from "./models/enums";
-import { CarQueue, ConditionArrowConflictPairs, ConfilictPairs, IntersectionTrafficLightStatus } from "./models/types";
-import { Vehicle } from "./vehicle";
+import { Directions, RoadDirection, TrafficLightStatus } from "../models/enums";
+import { CarQueues, ConditionArrowConflictPairs, ConfilictPairs, IntersectionTrafficLightStatus } from "../models/types";
+import { Vehicle } from "../vehicle";
 
-export class SystemTrafficController {
+export class CollisionTrafficControler {
 
     private conflictPairs: Record<RoadDirection, ConfilictPairs> = {
         [RoadDirection.NORTH]: { to: RoadDirection.NORTH, opposingStraight: { start: RoadDirection.SOUTH, end: RoadDirection.NORTH } },
@@ -18,7 +18,7 @@ export class SystemTrafficController {
         [RoadDirection.WEST]: { conflicts: [RoadDirection.NORTH, RoadDirection.EAST]}
     };
 
-    public shouldBlock(vehicle: Vehicle, queues: CarQueue): boolean {
+    public shouldBlock(vehicle: Vehicle, queues: CarQueues): boolean {
 
         const prConflict = this.conflictPairs[vehicle.getStartRoad()];
         const oppositingQueue = queues[prConflict.to];
@@ -39,7 +39,7 @@ export class SystemTrafficController {
         return false;
     };
 
-    public canMoveOnConditionArrow(vehical: Vehicle, queues: CarQueue, trafficLightsStatus: IntersectionTrafficLightStatus): boolean {
+    public canMoveOnConditionArrow(vehical: Vehicle, queues: CarQueues, trafficLightsStatus: IntersectionTrafficLightStatus): boolean {
 
         const prConflict = this.conditionArrowConflicts[vehical.getStartRoad()];
         

@@ -32,17 +32,30 @@ export class Road {
         return this.vehicles.length;
     };
 
+    public getRoadDirection(): RoadDirection {
+        return this.routeDirection;
+    };
+
+    public getTrafficLight(): TrafficLight {
+        return this.trafficLight;
+    };
+
+    public getTraffic(): Vehicle[] {
+        return this.vehicles;
+    };
+
     public changeTrafficLightStatus(status: TrafficLightStatus): void {
 
         console.info(`Road ${this.routeDirection} traffic light status changed to ${status}`);
 
-        if(this.trafficLight.isConditionArrowOn() === true){
-            console.info(`Road ${this.routeDirection} conditional arrow status changed to ${!this.trafficLight.getCondtionArrowStatus()}`);
-
-            this.trafficLight.changeConditionArrow();
-        }
-
-
         this.trafficLight.changeStatus(status);
     };
+
+    public changeConditionalArrowStatus(status: boolean): void {
+        if(this.trafficLight.isConditionArrowOn() === false) return;
+        
+        console.info(`Road ${this.routeDirection} conditional arrow status changed to ${!this.trafficLight.getCondtionArrowStatus()}`);
+
+        this.trafficLight.changeConditionArrow(status);
+    }
 }

@@ -1,9 +1,11 @@
+import { RoadDirection } from "./models/enums";
+
 export class Vehicle {
     private vehicleId: string;
-    private startRoad: string;
-    private endRoad: string;
+    private startRoad: RoadDirection;
+    private endRoad: RoadDirection;
 
-    constructor(vehicleId: string, startRoad: string, endRoad: string) {
+    constructor(vehicleId: string, startRoad: RoadDirection, endRoad: RoadDirection) {
         this.vehicleId = vehicleId;
         this.startRoad = startRoad;
         this.endRoad = endRoad;
@@ -12,4 +14,12 @@ export class Vehicle {
     public getVehicleId(): string {
         return this.vehicleId;
     };
+
+    public getStartRoad(): RoadDirection {
+        return this.startRoad;
+    }
+
+    public getEndRoad(): RoadDirection {
+        return this.endRoad;
+    }
 };
