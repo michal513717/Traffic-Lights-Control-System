@@ -1,4 +1,5 @@
-import { ActionType, RoadDirection } from "./enums";
+import { Vehicle } from "../vehicle";
+import { ActionType, RoadDirection, TrafficLightStatus } from "./enums";
 
 export type Action = Step | AddVehicle;
 
@@ -9,4 +10,20 @@ export type AddVehicle = {
     vehicleId: string;
     startRoad: RoadDirection;
     endRoad: RoadDirection;
+};
+
+export type ConfilictPairs = {
+    to: RoadDirection;
+    opposingStraight: {
+        start: RoadDirection;
+        end: RoadDirection;
+    };
+};
+
+export type ConditionArrowConflictPairs = {
+    conflicts: RoadDirection[];
 }
+
+export type IntersectionTrafficLightStatus = Record<RoadDirection, TrafficLightStatus>;
+
+export type CarQueue = Record<RoadDirection, Vehicle[]>;
