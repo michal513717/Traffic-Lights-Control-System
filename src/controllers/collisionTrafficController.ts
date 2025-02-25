@@ -18,6 +18,13 @@ export class CollisionTrafficControler {
         [RoadDirection.WEST]: { conflicts: [RoadDirection.NORTH, RoadDirection.EAST]}
     };
 
+    private rightTurnDirections: Record<RoadDirection, RoadDirection> ={
+        [RoadDirection.NORTH]: RoadDirection.WEST,
+        [RoadDirection.SOUTH]: RoadDirection.EAST,
+        [RoadDirection.EAST]: RoadDirection.NORTH,
+        [RoadDirection.WEST]: RoadDirection.SOUTH
+    };
+
     public canVehicalBeBlock(vehicle: Vehicle, queues: CarQueues): boolean {
 
         const prConflict = this.conflictPairs[vehicle.getStartRoad()];
@@ -42,6 +49,8 @@ export class CollisionTrafficControler {
     public canVehicalMoveOnConditionArrow(vehical: Vehicle, queues: CarQueues, trafficLightsStatus: IntersectionTrafficLightStatus): boolean {
 
         const prConflict = this.conditionArrowConflicts[vehical.getStartRoad()];
+
+        if(this.rightTurnDirections[vehical.getStartRoad()] !== vehical.getEndRoad()) return false;
         
         prConflict.conflicts.forEach((direction) => {
             if(

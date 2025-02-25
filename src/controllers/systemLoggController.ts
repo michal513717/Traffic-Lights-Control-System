@@ -13,6 +13,10 @@ export class SystemLoggController {
         return this.stepStatuses;
     };
 
+    public clearStepStatuses(): void {
+        this.stepStatuses = [];
+    };
+
     public printStepStatuses(): void {
         const output = {
             stepStatuses: this.stepStatuses
