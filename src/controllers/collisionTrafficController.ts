@@ -52,16 +52,15 @@ export class CollisionTrafficControler {
 
         if(this.rightTurnDirections[vehical.getStartRoad()] !== vehical.getEndRoad()) return false;
         
-        prConflict.conflicts.forEach((direction) => {
-            if(
-                trafficLightsStatus[direction] === TrafficLightStatus.GREEN &&
-                queues[direction].length > 0
-            ){
-                return false;
-            }
-        })
-        
-
+        const hasConflict = prConflict.conflicts.some((direction) => {
+            return trafficLightsStatus[direction] === TrafficLightStatus.GREEN &&
+                   queues[direction].length > 0;
+        });
+    
+        if (hasConflict) {
+            return false;
+        }
+    
         return true;
     }
 }
