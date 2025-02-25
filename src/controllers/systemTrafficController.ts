@@ -25,6 +25,11 @@ export class SystemTrafficContoller {
     private updateTrafficLights(): void {
 
         const newGroup = this.priorityTrafficController.chooseLightsGroup(state.getCarQueues(), state.getTotalVehicles());
+        
+        //
+        if(this.pendingGroup === null){
+            this.pendingGroup = newGroup;
+        };
 
         if (this.inTransition === true) { // switch to green
             this.applyGroupStatus(this.previousGroup, TrafficLightStatus.RED, false);
