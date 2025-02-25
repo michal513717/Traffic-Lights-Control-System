@@ -18,7 +18,7 @@ export class CollisionTrafficControler {
         [RoadDirection.WEST]: { conflicts: [RoadDirection.NORTH, RoadDirection.EAST]}
     };
 
-    public shouldBlock(vehicle: Vehicle, queues: CarQueues): boolean {
+    public canVehicalBeBlock(vehicle: Vehicle, queues: CarQueues): boolean {
 
         const prConflict = this.conflictPairs[vehicle.getStartRoad()];
         const oppositingQueue = queues[prConflict.to];
@@ -39,7 +39,7 @@ export class CollisionTrafficControler {
         return false;
     };
 
-    public canMoveOnConditionArrow(vehical: Vehicle, queues: CarQueues, trafficLightsStatus: IntersectionTrafficLightStatus): boolean {
+    public canVehicalMoveOnConditionArrow(vehical: Vehicle, queues: CarQueues, trafficLightsStatus: IntersectionTrafficLightStatus): boolean {
 
         const prConflict = this.conditionArrowConflicts[vehical.getStartRoad()];
         

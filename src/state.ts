@@ -32,6 +32,15 @@ class State {
             [RoadDirection.WEST]: this.roads.west.getTraffic()
         }
     };
+
+    public getTrafficLightStatuses(): Record<RoadDirection, TrafficLightStatus> {
+        return {
+            [RoadDirection.NORTH]: this.roads.north.getTrafficLightStatus(),
+            [RoadDirection.SOUTH]: this.roads.south.getTrafficLightStatus(),
+            [RoadDirection.EAST]: this.roads.east.getTrafficLightStatus(),
+            [RoadDirection.WEST]: this.roads.west.getTrafficLightStatus()
+        }
+    };
 }
 
 export const state = new State();

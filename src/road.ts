@@ -24,8 +24,8 @@ export class Road {
         this.vehicles.push(vehicle);
     };
 
-    public removeVehicle(): void {
-        this.vehicles.shift();
+    public removeVehicle(): Vehicle {
+        return this.vehicles.shift()!;
     };
 
     public getTrafficLength(): number {
@@ -40,8 +40,16 @@ export class Road {
         return this.trafficLight;
     };
 
+    public getTrafficLightStatus(): TrafficLightStatus {
+        return this.getTrafficLight().getStatus();
+    };
+
     public getTraffic(): Vehicle[] {
         return this.vehicles;
+    };
+
+    public getFirstVehicle(): Vehicle {
+        return this.vehicles[0];
     };
 
     public changeTrafficLightStatus(status: TrafficLightStatus): void {
@@ -52,10 +60,10 @@ export class Road {
     };
 
     public changeConditionalArrowStatus(status: boolean): void {
-        if(this.trafficLight.isConditionArrowOn() === false) return;
-        
+        if (this.trafficLight.isConditionArrowOn() === false) return;
+
         console.info(`Road ${this.routeDirection} conditional arrow status changed to ${!this.trafficLight.getCondtionArrowStatus()}`);
 
         this.trafficLight.changeConditionArrow(status);
-    }
+    };
 }

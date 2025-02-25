@@ -24,7 +24,7 @@ export class TrafficPriorityController {
         const numerator = low * 0.3 + medium * 0.6 + high * 1.0;
         const denominator = low + medium + high;
         return denominator === 0 ? 0 : numerator / denominator;
-    }
+    };
 
     public updateFairnessWeights(lights: IntersectionTrafficLightStatus, queues: CarQueues): void {
         for (const road of Object.values(RoadDirection)) {
@@ -34,11 +34,11 @@ export class TrafficPriorityController {
                 this.fairnessWeights[road] += 0.1;
             }
         }
-    }
+    };
 
     public getFairnessWeights(): Record<RoadDirection, number> {
         return this.fairnessWeights;
-    }
+    };
 
     public chooseLightsGroup(queue: CarQueues, totalVehices: number): RoadGroup {
 
@@ -52,5 +52,5 @@ export class TrafficPriorityController {
             this.fuzzyPriority(queue.west.length, totalVehices) * fairnessWeights.west;
         if (nsEffective === 0 && ewEffective === 0) return null;
         return nsEffective >= ewEffective ? "NS" : "EW";
-    }
+    };
 }
