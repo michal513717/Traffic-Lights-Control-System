@@ -1,7 +1,6 @@
-import { TrafficLightStatus, RoadDirection, ActionType } from './models/enums';
+import { TrafficLightStatus, RoadDirection } from './models/enums';
 import { CarQueues } from './models/types';
-import { Road } from './road';
-import { TrafficLight } from './trafficLight';
+import { Road } from './roadElements/road';
 
 class State {
 

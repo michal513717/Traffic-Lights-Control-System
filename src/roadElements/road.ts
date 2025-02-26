@@ -1,4 +1,4 @@
-import { RoadDirection, TrafficLightStatus } from "./models/enums";
+import { RoadDirection, TrafficLightStatus } from "../models/enums";
 import { TrafficLight } from "./trafficLight";
 import { Vehicle } from "./vehicle";
 

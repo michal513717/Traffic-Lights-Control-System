@@ -1,10 +1,10 @@
-import { CarQueues, RoadGroup } from "../models/types";
 import { CollisionTrafficControler } from "./collisionTrafficController";
 import { TrafficPriorityController } from "./priorityTrafficController";
-import { state } from "../state";
 import { RoadDirection, TrafficLightStatus } from "../models/enums";
-import { TrafficLight } from "../trafficLight";
 import { SystemLoggController } from "./systemLoggController";
+import { TrafficLight } from "../roadElements/trafficLight";
+import { RoadGroup } from "../models/types";
+import { state } from "../state";
 
 export class SystemTrafficContoller {
 
@@ -75,7 +75,7 @@ export class SystemTrafficContoller {
 
         const leftVehicles: string[] = [];
         const canShiftCarFrom = [];
-        // debugger;
+        debugger;
         let canShiftCar = false;
 
         for (const direction of Object.values(RoadDirection)) {

@@ -1,6 +1,6 @@
-import { Directions, RoadDirection, TrafficLightStatus } from "../models/enums";
 import { CarQueues, ConditionArrowConflictPairs, ConfilictPairs, IntersectionTrafficLightStatus } from "../models/types";
-import { Vehicle } from "../vehicle";
+import { RoadDirection, TrafficLightStatus } from "../models/enums";
+import { Vehicle } from "../roadElements/vehicle";
 
 export class CollisionTrafficControler {
 

@@ -1,12 +1,12 @@
-import { TrafficLightStatus, RoadDirection, ActionType } from './models/enums';
-import { Action, AddVehicle } from './models/types';
-import { Road } from './road';
-// import fs from 'fs';
-import { Vehicle } from './vehicle';
-import { runSimulation } from './a';
-import { state } from './state';
 import { SystemTrafficContoller } from './controllers/systemTrafficController';
 import { SystemLoggController } from './controllers/systemLoggController';
+import { RoadDirection, ActionType } from './models/enums';
+import { Action, AddVehicle } from './models/types';
+import { Vehicle } from './roadElements/vehicle';
+import { Road } from './roadElements/road';
+import { state } from './state';
+import * as path from 'path';
+import * as fs from 'fs';
 
 class Game {
 
@@ -18,13 +18,19 @@ class Game {
         [ActionType.STEP]: this.stepAction.bind(this)
     };
 
-    constructor(){
+    constructor() {
         this.systemLoggContoller = new SystemLoggController();
         this.systemTrafficContoller = new SystemTrafficContoller(this.systemLoggContoller);
         this.roads = state.getRoads();
     }
 
+    public setOutputFilePath(filePath: string): void {
+        this.systemLoggContoller.setOutputFilePath(filePath);
+    }
+
     public runSimulation(actions: Action[]): void {
+
+        this.systemLoggContoller.clearStepStatuses();
 
         actions.forEach((action) => {
             this.executeAction[action.type](action);
@@ -33,13 +39,15 @@ class Game {
         console.log('Simulation completed');
 
         this.systemLoggContoller.printStepStatuses();
+
+        this.systemLoggContoller.saveStepStatusesToFile();
     }
 
-    private stepAction(): void{
+    private stepAction(): void {
         this.systemTrafficContoller.step();
     };
 
-    private addVehicleAction(action: AddVehicle): void{
+    private addVehicleAction(action: AddVehicle): void {
         this.roads[action.startRoad].addVehicle(
             new Vehicle(
                 action.vehicleId,
@@ -50,103 +58,39 @@ class Game {
     };
 }
 
-(async () => {
-    // const game = new Game();
-    // await game.start();
-    //@ts-ignore TMP for beteer debugger
-    window.game = new Game();
+const jsonFilePath = process.argv[2];
 
-        // runSimulation(
-        //     [
-        //       { "type": "addVehicle", "vehicleId": "vehicle1", "startRoad": "north", "endRoad": "south" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle2", "startRoad": "south", "endRoad": "north" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle3", "startRoad": "east", "endRoad": "west" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle4", "startRoad": "west", "endRoad": "east" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle9", "startRoad": "west", "endRoad": "north" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle10", "startRoad": "west", "endRoad": "north" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle5", "startRoad": "north", "endRoad": "south" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle6", "startRoad": "south", "endRoad": "north" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle11", "startRoad": "west", "endRoad": "north" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle7", "startRoad": "east", "endRoad": "west" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle8", "startRoad": "west", "endRoad": "east" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle10", "startRoad": "west", "endRoad": "north" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle12", "startRoad": "west", "endRoad": "north" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle13", "startRoad": "west", "endRoad": "north" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle18", "startRoad": "north", "endRoad": "south" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle14", "startRoad": "west", "endRoad": "north" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle19", "startRoad": "north", "endRoad": "south" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle20", "startRoad": "north", "endRoad": "south" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle15", "startRoad": "west", "endRoad": "north" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle16", "startRoad": "west", "endRoad": "north" },
-        //       { "type": "addVehicle", "vehicleId": "vehicle17", "startRoad": "west", "endRoad": "north" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },  
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },  
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" },
-        //       { "type": "step" }
-        //     ]
-        //   );
+if (!jsonFilePath) {
+    console.error("No file path provided");
+    process.exit(1);
+};
 
-    // runSimulation(
-    [
-            {
-                "type": "addVehicle",
-                "vehicleId": "vehicle1",
-                "startRoad": "south",
-                "endRoad": "north"
-            },
-            {
-                "type": "addVehicle",
-                "vehicleId": "vehicle2",
-                "startRoad": "north",
-                "endRoad": "south"
-            },
-            {
-                "type": "step"
-            },
-            {
-                "type": "step"
-            },
-            {
-                "type": "addVehicle",
-                "vehicleId": "vehicle3",
-                "startRoad": "west",
-                "endRoad": "south"
-            },
-            {
-                "type": "addVehicle",
-                "vehicleId": "vehicle4",
-                "startRoad": "west",
-                "endRoad": "south"
-            },
-            {
-                "type": "step"
-            },
-            {
-                "type": "step"
-            }
-        ]
+const fullPath = path.resolve(jsonFilePath);
 
-})();
+if (!fs.existsSync(fullPath)) {
+    console.error(`File ${fullPath} doesn't exist`);
+    process.exit(1);
+}
+
+fs.readFile(fullPath, 'utf-8', (err, data) => {
+    if (err) {
+        console.error(`Error during opening file: ${err.message}`);
+        process.exit(1);
+    }
+
+    try {
+        const jsonData = JSON.parse(data);
+
+        const outputFilePath = path.resolve(process.argv[3] || 'output.json');
+
+        const game = new Game();
+
+        game.setOutputFilePath(outputFilePath);
+
+        game.runSimulation(jsonData.commands);
+
+    } catch (err: any) {
+        console.error(`Error during parsing file: ${err.message}`);
+        process.exit(1);
+    }
+});

@@ -1,5 +1,5 @@
-import { RoadDirection, TrafficLightStatus } from "../models/enums";
 import { CarQueues, IntersectionTrafficLightStatus, RoadGroup } from "../models/types";
+import { RoadDirection, TrafficLightStatus } from "../models/enums";
 
 export class TrafficPriorityController {
 

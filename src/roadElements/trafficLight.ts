@@ -1,4 +1,4 @@
-import { TrafficLightStatus } from "./models/enums";
+import { TrafficLightStatus } from "../models/enums";
 
 export class TrafficLight {
     private conditionArrow: boolean | null;

@@ -1,4 +1,4 @@
-import { RoadDirection } from "./models/enums";
+import { RoadDirection } from "../models/enums";
 
 export class Vehicle {
     private vehicleId: string;

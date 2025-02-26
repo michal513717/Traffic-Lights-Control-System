@@ -1,5 +1,5 @@
-import { Vehicle } from "../vehicle";
 import { ActionType, RoadDirection, TrafficLightStatus } from "./enums";
+import { Vehicle } from "../roadElements/vehicle";
 
 export type Action = Step | AddVehicle;
 
