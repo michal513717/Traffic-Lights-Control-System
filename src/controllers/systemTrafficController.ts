@@ -75,7 +75,7 @@ export class SystemTrafficContoller {
 
         const leftVehicles: string[] = [];
         const canShiftCarFrom = [];
-        debugger;
+        
         let canShiftCar = false;
 
         for (const direction of Object.values(RoadDirection)) {
