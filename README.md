@@ -3,6 +3,8 @@
 
 This project implements an intelligent traffic control algorithm that dynamically assigns priority to road groups at an intersection. The system balances vehicle queues using fuzzy logic, fairness weights, and a smooth transition mechanism while incorporating collision detection to prevent accidents.
 
+---
+
 ### Short version algorithm description:
 
 1. Updating Fairness Weights
@@ -36,7 +38,7 @@ The system checks each road – for each vehicle, it evaluates if the vehicle ca
 **Summary:**
 In a real-world scenario, the best results are achieved by using machine learning. After the system is properly trained, it will provide the highest accuracy in assessing traffic intensity and prioritizing movements. It is also worth considering the use of a roundabout.
 
-
+---
 ### 1. Algorithm Components
 
 **Purpose**: 
@@ -66,6 +68,8 @@ For norm ≤ 0.6, the value is 0, then increases linearly to 1 at norm = 1.
 
 This value indicates how much a particular road should be served, with higher values corresponding to higher priority.
 
+---
+
 ### 2. Fairness Weights
 
  **Purpose:**
@@ -79,6 +83,8 @@ Ensure that no road is neglected, even if it has a temporarily low number of veh
     - Resets the weight to 1 for roads that have a green light (indicating they are being served).
     - Increases the weight (by a fixed increment, e.g., 0.1) for roads with waiting vehicles that are not currently served.
  - The increased weight boosts the effective priority of that road in subsequent calculations, ensuring fair distribution of green lights.
+
+---
 
 ### 3. Group Selection (Choosing the Active Lights Group) ###
 
@@ -101,6 +107,9 @@ For each group, the effective priority is computed as the sum of the fuzzy prior
             fuzzyPriority(queue.west.length, totalVehices) * fairnessWeights.west;`
  - Group Choice:  
 The group with the higher effective priority is chosen to receive green lights. If both groups have an effective priority of 0 (i.e., no vehicles), the function returns null.
+
+---
+
 ### 4. Traffic Light Transition Mechanism ###
 **Purpose:**  
 
@@ -119,6 +128,9 @@ If the newly chosen group is the same as the previous group, the lights for that
 If the chosen group differs from the previous group, the algorithm will sets the lights for the previous group to yellow or Marks the new group as pendingGroup and sets inTransition to true.
     - **Completing the Transition:**  
 When in the next step the system detects inTransition is true, it switches the pending group’s lights to green, resets inTransition and updates previousGroup.
+
+---
+
 ### 5. Collision Detection Integration###
 **Purpose:**  
 
