@@ -3,6 +3,39 @@
 
 This project implements an intelligent traffic control algorithm that dynamically assigns priority to road groups at an intersection. The system balances vehicle queues using fuzzy logic, fairness weights, and a smooth transition mechanism while incorporating collision detection to prevent accidents.
 
+### Short version algorithm description:
+
+1. Updating Fairness Weights
+
+At the beginning of each step, fairness weights are updated – roads that do not have a green light increase their weight to ensure that no road is neglected.
+
+2. Group Selection Using Fuzzy Logic and Fairness  
+
+The priority of each road is computed using a fuzzy logic function based on the proportion of vehicles waiting on that road compared to the total number of vehicles. This fuzzy value is then multiplied by the fairness weight of the road. The effective priorities for the NS (North-South) and EW (East-West) groups are summed, and the group with the higher effective priority is selected.
+
+3. Traffic Light Switching
+
+
+- For the first activation, the selected group’s lights are set to green.
+- If the group remains the same, the green light is maintained.
+- If a new group is selected (e.g., due to increased pedestrian flow), the system enters an “in transition” state: the previous group’s lights change to yellow (during which vehicles may still pass, but the yellow phase lasts one step) and then the new group’s lights switch to green.
+
+4. Conditional Arrows
+
+
+Roads that are not receiving green lights have conditional right-turn arrows enabled.
+
+5. Checking Vehicle Movement Possibilities  
+
+The system checks each road – for each vehicle, it evaluates if the vehicle can move:
+
+- If a vehicle has a green light, it is allowed to go straight or turn right provided there is no risk of collision.
+- If the vehicle intends to turn left, it must yield to oncoming traffic (i.e., the vehicle coming straight on the main road). If the conditions are met, the vehicle is allowed to proceed; otherwise, it must wait.
+- If the vehicle is waiting on a road with a conditional arrow, it verifies that the main road is clear. If the conditions are met, the vehicle is allowed to proceed.
+
+**Summary:**
+In a real-world scenario, the best results are achieved by using machine learning. After the system is properly trained, it will provide the highest accuracy in assessing traffic intensity and prioritizing movements. It is also worth considering the use of a roundabout.
+
 
 ### 1. Algorithm Components
 
@@ -28,12 +61,12 @@ For norm ≤ 0.6, the value is 0, then increases linearly to 1 at norm = 1.
 - Aggregation: The final fuzzy priority is calculated as a weighted average:
 
 
-[$priority=((low×0.3)+(medium×0.6)+(high×1.0))/(low+medium+high)$ ](https://latex.codecogs.com/svg.image?&space;priority=\frac{(low*0.3)&plus;(medium*0.6)&plus;(high*1.0)}{low&plus;medium&plus;high})
+[$priority=((low×0.3)+(medium×0.6)+(high×1.0))/(low+medium+high)$](https://latex.codecogs.com/svg.image?&space;priority=\frac{(low*0.3)&plus;(medium*0.6)&plus;(high*1.0)}{low&plus;medium&plus;high})
 ​
 
 This value indicates how much a particular road should be served, with higher values corresponding to higher priority.
 
-### 1. Fairness Weights
+### 2. Fairness Weights
 
  **Purpose:**
 
@@ -62,10 +95,9 @@ How It Works:
 
  - Effective Priority Calculation:
 For each group, the effective priority is computed as the sum of the fuzzy priorities of its roads multiplied by their respective fairness weights. For example:
-    - For NS:  
-`fuzzyPriority(queue.north.length, totalVehices) * fairnessWeights.north +
+    - For NS: `fuzzyPriority(queue.north.length, totalVehices) * fairnessWeights.north +
             fuzzyPriority(queue.south.length, totalVehices) * fairnessWeights.south;`
-    - For EW:`            fuzzyPriority(queue.east.length, totalVehices) * fairnessWeights.east +
+    - For EW: `fuzzyPriority(queue.east.length, totalVehices) * fairnessWeights.east +
             fuzzyPriority(queue.west.length, totalVehices) * fairnessWeights.west;`
  - Group Choice:  
 The group with the higher effective priority is chosen to receive green lights. If both groups have an effective priority of 0 (i.e., no vehicles), the function returns null.

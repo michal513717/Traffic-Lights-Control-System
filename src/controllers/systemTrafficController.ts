@@ -86,6 +86,7 @@ export class SystemTrafficContoller {
             if(this.canVehiclePassIntersection(direction)){
                 canShiftCar = true;
                 canShiftCarFrom.push(direction);
+                continue;
             }
             
             if(this.canVehiclePassIntersectionOnConditionalArrow(direction)){
