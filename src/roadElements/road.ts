@@ -19,7 +19,7 @@ export class Road {
 
     public addVehicle(vehicle: Vehicle): void {
 
-        console.info(`Added vehical ${vehicle.getVehicleId()} to road ${this.routeDirection}`);
+        //console.info(`Added vehical ${vehicle.getVehicleId()} to road ${this.routeDirection}`);
 
         this.vehicles.push(vehicle);
     };
@@ -54,7 +54,7 @@ export class Road {
 
     public changeTrafficLightStatus(status: TrafficLightStatus): void {
 
-        console.info(`Road ${this.routeDirection} traffic light status changed to ${status}`);
+        //console.info(`Road ${this.routeDirection} traffic light status changed to ${status}`);
 
         this.trafficLight.changeStatus(status);
     };
@@ -62,7 +62,7 @@ export class Road {
     public changeConditionalArrowStatus(status: boolean): void {
         if (this.trafficLight.isConditionArrowOn() === false) return;
 
-        console.info(`Road ${this.routeDirection} conditional arrow status changed to ${!this.trafficLight.getCondtionArrowStatus()}`);
+        //console.info(`Road ${this.routeDirection} conditional arrow status changed to ${!this.trafficLight.getCondtionArrowStatus()}`);
 
         this.trafficLight.changeConditionArrow(status);
     };
