@@ -5,7 +5,7 @@ import { Vehicle } from "../roadElements/vehicle";
 export class CollisionTrafficControler {
 
     private conflictPairs: Record<RoadDirection, ConfilictPairs> = {
-        [RoadDirection.NORTH]: { to: RoadDirection.NORTH, opposingStraight: { start: RoadDirection.SOUTH, end: RoadDirection.NORTH } },
+        [RoadDirection.NORTH]: { to: RoadDirection.EAST, opposingStraight: { start: RoadDirection.SOUTH, end: RoadDirection.NORTH } },
         [RoadDirection.SOUTH]: { to: RoadDirection.WEST, opposingStraight: { start: RoadDirection.NORTH, end: RoadDirection.SOUTH } },
         [RoadDirection.EAST]: { to: RoadDirection.SOUTH, opposingStraight: { start: RoadDirection.WEST, end: RoadDirection.EAST } },
         [RoadDirection.WEST]: { to: RoadDirection.NORTH, opposingStraight: { start: RoadDirection.EAST, end: RoadDirection.WEST } }
